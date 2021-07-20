@@ -17,3 +17,5 @@ pool.query(CREATE_TABLE, function (error) {
   if (error) throw error;
   console.log("DB connection established");
 });
+
+module.exports = { pool };

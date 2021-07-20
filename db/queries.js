@@ -6,4 +6,8 @@ const CREATE_TABLE = `
     )
 `;
 
-module.exports = { CREATE_TABLE };
+const CREATE_SHORT_URL = `
+    INSERT INTO urls (id, original_url) VALUES (?, ?)
+`;
+
+module.exports = { CREATE_TABLE, CREATE_SHORT_URL };
