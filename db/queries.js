@@ -10,4 +10,8 @@ const CREATE_SHORT_URL = `
     INSERT INTO urls (id, original_url) VALUES (?, ?)
 `;
 
-module.exports = { CREATE_TABLE, CREATE_SHORT_URL };
+const FIND_SHORT_URL = `
+    SELECT original_url FROM urls WHERE id = ?
+`;
+
+module.exports = { CREATE_TABLE, CREATE_SHORT_URL, FIND_SHORT_URL };

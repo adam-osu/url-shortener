@@ -2,7 +2,7 @@ const express = require("express");
 const { customAlphabet } = require("nanoid");
 
 const { pool } = require("./db");
-const { CREATE_SHORT_URL } = require("./db/queries");
+const { CREATE_SHORT_URL, FIND_SHORT_URL } = require("./db/queries");
 const nanoid = customAlphabet(
   "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
   10
@@ -27,6 +27,27 @@ app.post("/shorten", (req, res) => {
       return res.status(500).send({ message: "Internal server error" });
     }
     res.status(200).send({ shortenedUrl: `http://localhost:4000/${shortId}` });
+  });
+});
+
+app.get("/:short_id", (req, res) => {
+  const { short_id: shortId } = req.params;
+
+  if (!shortId) {
+    return res.status(404).send({ message: "Not found!" });
+  }
+
+  pool.query(FIND_SHORT_URL, [shortId], (error, result) => {
+    if (error) {
+      console.error(error);
+      return res.status(500).send({ message: "Internal server error" });
+    }
+
+    if (!result.length) {
+      return res.status(404).send({ message: "Not found!" });
+    }
+
+    res.status(301).redirect(result[0].original_url);
   });
 });
 
