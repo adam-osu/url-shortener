@@ -1,5 +1,16 @@
 const express = require("express");
+const path = require("path");
+const bodyParser = require("body-parser");
 const { customAlphabet } = require("nanoid");
+/**
+ * Load env variables
+ *
+ * Based on docs
+ * https://www.npmjs.com/package/dotenv
+ */
+require("dotenv").config({
+  path: path.resolve(process.cwd(), ".env.development"),
+});
 
 const { pool } = require("./db");
 const { CREATE_SHORT_URL, FIND_SHORT_URL } = require("./db/queries");
@@ -8,8 +19,12 @@ const nanoid = customAlphabet(
   10
 );
 
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 const app = express();
+
+// From https://github.com/expressjs/body-parser
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 app.post("/shorten", (req, res) => {
   const { original_url: originalUrl } = req.body;

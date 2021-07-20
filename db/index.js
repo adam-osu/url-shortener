@@ -6,11 +6,10 @@ const { CREATE_TABLE } = require("./queries");
 // Modified to create table
 const pool = mysql.createPool({
   connectionLimit: 10,
-  host: "0.0.0.0",
-  user: "root",
-  password: "password",
-  port: 3306,
-  database: "url_shortener_dev",
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 });
 
 pool.query(CREATE_TABLE, function (error) {
