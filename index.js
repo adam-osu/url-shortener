@@ -12,7 +12,7 @@ const PORT = 4000;
 const app = express();
 
 app.post("/shorten", (req, res) => {
-  const { original_url: originalUrl } = req.query;
+  const { original_url: originalUrl } = req.body;
 
   if (!originalUrl) {
     return res
@@ -21,8 +21,9 @@ app.post("/shorten", (req, res) => {
   }
 
   const shortId = nanoid();
-  pool.query(CREATE_SHORT_URL, [originalUrl, shortId], (err) => {
-    if (err) {
+  pool.query(CREATE_SHORT_URL, [shortId, originalUrl], (error) => {
+    if (error) {
+      console.error(error);
       return res.status(500).send({ message: "Internal server error" });
     }
     res.status(200).send({ shortenedUrl: `http://localhost:4000/${shortId}` });
