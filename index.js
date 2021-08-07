@@ -8,9 +8,11 @@ const { customAlphabet } = require("nanoid");
  * Based on docs
  * https://www.npmjs.com/package/dotenv
  */
-require("dotenv").config({
-  path: path.resolve(process.cwd(), ".env.development"),
-});
+if (process.env.NODE_ENV === "development") {
+  require("dotenv").config({
+    path: path.resolve(process.cwd(), ".env.development"),
+  });
+}
 
 const { pool } = require("./db");
 const { CREATE_SHORT_URL, FIND_SHORT_URL } = require("./db/queries");
