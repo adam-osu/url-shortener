@@ -43,7 +43,7 @@ app.post("/shorten", (req, res) => {
       console.error(error);
       return res.status(500).send({ message: "Internal server error" });
     }
-    res.status(200).send({ shortenedUrl: `http://localhost:4000/${shortId}` });
+    res.status(200).send({ shortenedUrl: `${req.headers.host}/${shortId}` });
   });
 });
 
