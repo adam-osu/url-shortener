@@ -43,8 +43,12 @@ app.post("/shorten", (req, res) => {
       console.error(error);
       return res.status(500).send({ message: "Internal server error" });
     }
+
+    const protocol =
+      process.env.NODE_ENV === "development" ? req.protocol : "https";
+
     res.status(200).send({
-      shortenedUrl: `${req.protocol}://${req.headers.host}/${shortId}`,
+      shortenedUrl: `${protocol}://${req.headers.host}/${shortId}`,
     });
   });
 });
