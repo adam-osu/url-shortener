@@ -34,7 +34,7 @@ Example payload
 
 ```
 {
-   original_url: "https://raw.githubusercontent.com/adam-osu/mysql-adminer-docker-compose/main/docker-compose.yml"
+   "original_url": "https://raw.githubusercontent.com/adam-osu/mysql-adminer-docker-compose/main/docker-compose.yml"
 }
 ```
 
@@ -42,7 +42,7 @@ Example response
 
 ```
 {
-    "shortenedUrl": "http://localhost:4000/earlAJoZXK"
+    "shortened_url": "http://localhost:4000/earlAJoZXK"
 }
 ```
 

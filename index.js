@@ -32,9 +32,7 @@ app.post("/shorten", (req, res) => {
   const { original_url: originalUrl } = req.body;
 
   if (!originalUrl) {
-    return res
-      .status(400)
-      .send({ message: "original_url query param missing!" });
+    return res.status(400).send({ message: "original_url param missing!" });
   }
 
   const shortId = nanoid();
@@ -48,7 +46,7 @@ app.post("/shorten", (req, res) => {
       process.env.NODE_ENV === "development" ? req.protocol : "https";
 
     res.status(200).send({
-      shortenedUrl: `${protocol}://${req.headers.host}/${shortId}`,
+      shortened_url: `${protocol}://${req.headers.host}/${shortId}`,
     });
   });
 });
