@@ -8,9 +8,11 @@ const { customAlphabet } = require("nanoid");
  * Based on docs
  * https://www.npmjs.com/package/dotenv
  */
-require("dotenv").config({
-  path: path.resolve(process.cwd(), ".env.development"),
-});
+if (process.env.NODE_ENV === "development") {
+  require("dotenv").config({
+    path: path.resolve(process.cwd(), ".env.development"),
+  });
+}
 
 const { pool } = require("./db");
 const { CREATE_SHORT_URL, FIND_SHORT_URL } = require("./db/queries");
@@ -41,7 +43,13 @@ app.post("/shorten", (req, res) => {
       console.error(error);
       return res.status(500).send({ message: "Internal server error" });
     }
-    res.status(200).send({ shortenedUrl: `http://localhost:4000/${shortId}` });
+
+    const protocol =
+      process.env.NODE_ENV === "development" ? req.protocol : "https";
+
+    res.status(200).send({
+      shortenedUrl: `${protocol}://${req.headers.host}/${shortId}`,
+    });
   });
 });
 

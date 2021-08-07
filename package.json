@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
-    "start:dev": "nodemon"
+    "start:dev": "NODE_ENV=development nodemon",
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
